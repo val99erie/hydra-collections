@@ -5,6 +5,7 @@ module Hydra
     autoload :Collectible
     autoload :SearchService
     autoload :AcceptsBatches
+    autoload :AcceptsPersistedBatches
     class Engine < ::Rails::Engine
       engine_name "collections"
     end
