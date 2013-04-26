@@ -1,5 +1,5 @@
 # View Helpers for Hydra Batch Edit functionality
-module PersistedBatchHelper 
+module SessionBatchHelper 
   
   # determines if the given document id is in the batch
   def item_in_batch?(doc_id)

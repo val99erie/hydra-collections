@@ -1,12 +1,12 @@
 module Hydra
   module Collections
-    module AcceptsPersistedBatches
+    module AcceptsSessionBatches
       extend ActiveSupport::Concern
 
-      included do
-        before_filter :filter_docs_with_access!, :only=>[:edit, :update, :destroy_collection]
-        before_filter :check_for_empty!, :only=>[:edit, :update, :destroy_collection]
-      end
+      # included do
+      #   before_filter :filter_docs_with_access!, :only=>[:edit, :update, :destroy_collection]
+      #   before_filter :check_for_empty!, :only=>[:edit, :update, :destroy_collection]
+      # end
 
 
       # fetch the documents that match the ids in the folder

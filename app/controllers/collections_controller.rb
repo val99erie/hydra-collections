@@ -15,4 +15,6 @@
 
 class CollectionsController < ApplicationController
   include Hydra::CollectionsControllerBehavior
+  include Hydra::Collections::AcceptsBatches
+  # include Hydra::Collections::AcceptsSessionBatches
 end

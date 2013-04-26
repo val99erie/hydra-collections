@@ -1,19 +1,19 @@
 require "spec_helper"
 
-class AcceptsPersistedBatchesController < ApplicationController
-  include Hydra::Collections::AcceptsPersistedBatches
+class AcceptsSessionBatchesController < ApplicationController
+  include Hydra::Collections::AcceptsSessionBatches
 end
 
-describe AcceptsPersistedBatchesController do
+describe AcceptsSessionBatchesController do
   
   def with_batches_routing
     with_routing do |map|
       map.draw do
-        match '/index' => "accepts_persisted_batches#index", :via => :put
-        match '/useall' => "accepts_persisted_batches#all", :via => :put
-        match '/add' => "accepts_persisted_batches#add", :via => :put
-        match '/clear' => "accepts_persisted_batches#clear", :via => :put
-        match '/:id' => "accepts_persisted_batches#destroy", :via => :delete
+        match '/index' => "accepts_session_batches#index", :via => :put
+        match '/useall' => "accepts_session_batches#all", :via => :put
+        match '/add' => "accepts_session_batches#add", :via => :put
+        match '/clear' => "accepts_session_batches#clear", :via => :put
+        match '/:id' => "accepts_session_batches#destroy", :via => :delete
       end
       yield
     end
