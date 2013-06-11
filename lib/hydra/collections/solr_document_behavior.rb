@@ -25,7 +25,7 @@ module Hydra
       end
   
       def description
-        Array(self[Solrizer.solr_name('desc_metadata__description')]).first
+        Array(self[Solrizer.solr_name('desc_metadata__description')])
       end
       
     end

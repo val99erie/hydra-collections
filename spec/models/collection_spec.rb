@@ -18,6 +18,7 @@ describe Collection do
   before(:all) do
     @user = FactoryGirl.find_or_create(:user)
     class GenericFile < ActiveFedora::Base
+      include Hydra::Collections::Collectible
     end
   end
   after(:all) do
@@ -32,9 +33,9 @@ describe Collection do
     @gf2 = GenericFile.create
   end
   after(:each) do
-    @collection.destroy rescue
-    @gf1.destroy
-    @gf2.destroy
+    @collection.destroy rescue  {}
+    @gf1.destroy  rescue  {}
+    @gf2.destroy  rescue  {}
   end
   it "should have a depositor" do
     @collection.depositor.should == @user.user_key
@@ -97,4 +98,21 @@ describe Collection do
     lambda {GenericFile.find(@gf1.pid)}.should_not raise_error ActiveFedora::ObjectNotFoundError
     lambda {GenericFile.find(@gf2.pid)}.should_not raise_error ActiveFedora::ObjectNotFoundError
   end
+  it "should call after_remove when file removed" do
+    #Collection.should_receive(:update_members)
+    @collection.members = [@gf1, @gf2]
+    @collection.save
+    @gf1.collections.first.pid.should == @collection.pid
+    @gf2.collections.first.pid.should == @collection.pid
+    @collection.members.delete(@gf1)
+    puts @collection.members
+    #@gf1.reload.save
+    @gf1.reload.collections.count.should == 0
+    #@gf1.collections.count.should == 0
+    @gf2.collections.first.pid.should == @collection.pid
+    lambda {GenericFile.find(@gf1.pid)}.should_not raise_error ActiveFedora::ObjectNotFoundError
+    lambda {GenericFile.find(@gf2.pid)}.should_not raise_error ActiveFedora::ObjectNotFoundError
+  end
+
+
 end

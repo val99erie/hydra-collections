@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'blacklight', github:'projectblacklight/blacklight' ,ref:'2eb87e73ee81ee701982ca32e5eca37429e3c199'
+gem 'active-fedora', github:'projecthydra/active_fedora', ref:'b14f7de981b3ebfe2098a3b47de6adae6ec07bfb'
 
 group :development, :test do
   gem 'sqlite3'

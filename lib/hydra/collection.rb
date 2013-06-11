@@ -14,7 +14,7 @@ module Hydra
       has_metadata :name => "properties", :type => Hydra::Datastream::Properties
       has_metadata :name => "rightsMetadata", :type => Hydra::Datastream::RightsMetadata
 
-      has_and_belongs_to_many :members, :property => :has_collection_member, :class_name => "ActiveFedora::Base"
+      has_and_belongs_to_many :members, :property => :has_collection_member, :class_name => "ActiveFedora::Base", :after_remove => :remove_member
 
       delegate_to :properties, [:depositor], :unique => true
       delegate_to :descMetadata, [:date_uploaded, :date_modified,
@@ -22,6 +22,7 @@ module Hydra
 
       before_create :set_date_uploaded
       before_save :set_date_modified
+      after_save :update_members
     end
 
     # TODO: Move this override into ScholarSphere
@@ -39,6 +40,10 @@ module Hydra
       self.descMetadata.class.config.keys
     end
 
+    def remove_member(member)
+      member.update_index
+    end
+
     private
 
     def set_date_uploaded
@@ -48,6 +53,13 @@ module Hydra
     def set_date_modified
       self.date_modified = Date.today
     end
+
+    # cause the members to index the relationship
+    def update_members
+      members.each {|member| member.save}
+    end
+
+
 
   end
 end
